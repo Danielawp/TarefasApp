@@ -3,7 +3,17 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.4.33205.214
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TarefasApp.Services", "TarefasApp.Services\TarefasApp.Services.csproj", "{DD1FD9FF-F277-4FAA-ADB2-B80258FA63C2}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TarefasApp.Services", "TarefasApp.Services\TarefasApp.Services.csproj", "{DD1FD9FF-F277-4FAA-ADB2-B80258FA63C2}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "1 - Camada de Serviços", "1 - Camada de Serviços", "{C28DB2A2-95C7-4923-BAF4-EB6E71CCF8E0}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "2 - Camada de Dominio", "2 - Camada de Dominio", "{1FE7A972-AB75-4925-B3B7-E21DB5C1E8CA}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "3 - Camada de infraestrutura", "3 - Camada de infraestrutura", "{807014E1-92E8-4805-B1D2-5C0C69339E4D}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TarefasApp.Domain", "TarefasApp.Domain\TarefasApp.Domain.csproj", "{18E740E9-88FF-411D-B01C-F43728E81527}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TarefasApp.Infra.Data", "TarefasApp.Infra.Data\TarefasApp.Infra.Data.csproj", "{7C02A3BB-76C5-4D81-A856-6C4EA2EEBAAA}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,9 +25,22 @@ Global
 		{DD1FD9FF-F277-4FAA-ADB2-B80258FA63C2}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{DD1FD9FF-F277-4FAA-ADB2-B80258FA63C2}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{DD1FD9FF-F277-4FAA-ADB2-B80258FA63C2}.Release|Any CPU.Build.0 = Release|Any CPU
+		{18E740E9-88FF-411D-B01C-F43728E81527}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{18E740E9-88FF-411D-B01C-F43728E81527}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{18E740E9-88FF-411D-B01C-F43728E81527}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{18E740E9-88FF-411D-B01C-F43728E81527}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7C02A3BB-76C5-4D81-A856-6C4EA2EEBAAA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7C02A3BB-76C5-4D81-A856-6C4EA2EEBAAA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7C02A3BB-76C5-4D81-A856-6C4EA2EEBAAA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7C02A3BB-76C5-4D81-A856-6C4EA2EEBAAA}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{DD1FD9FF-F277-4FAA-ADB2-B80258FA63C2} = {C28DB2A2-95C7-4923-BAF4-EB6E71CCF8E0}
+		{18E740E9-88FF-411D-B01C-F43728E81527} = {1FE7A972-AB75-4925-B3B7-E21DB5C1E8CA}
+		{7C02A3BB-76C5-4D81-A856-6C4EA2EEBAAA} = {807014E1-92E8-4805-B1D2-5C0C69339E4D}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {E89057C5-C39C-470A-A2D1-58B4A94A5013}
