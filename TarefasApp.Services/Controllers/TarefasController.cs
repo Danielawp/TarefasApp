@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using AutoMapper;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using TarefasApp.Domain.Entities;
 using TarefasApp.Domain.Interfaces.Services;
@@ -14,10 +15,12 @@ namespace TarefasApp.Services.Controllers
     public class TarefasController : ControllerBase
     {
         private readonly ITarefaDomainService? _tarefaDomainService;
+        private readonly IMapper? _mapper;
 
-        public TarefasController(ITarefaDomainService? tarefaDomainService)
+        public TarefasController(ITarefaDomainService? tarefaDomainService, IMapper? mapper)
         {
             _tarefaDomainService = tarefaDomainService;
+            _mapper = mapper;
         }
 
         /// <summary>
@@ -26,36 +29,95 @@ namespace TarefasApp.Services.Controllers
         [HttpPost]
         public IActionResult Post([FromBody] TarefasPostModel model)
         {
-            var tarefa = new Tarefa
+            try
             {
-                Id = Guid.NewGuid(),
-                Nome = model.Nome,
-                DataHora = model.DataHora,
-                Descricao = model.Descricao,
-                Prioridade = (PrioridadeTarefa)model.Prioridade,
-                CategoriaId = model.CategoriaId,
-            };
+                var tarefa = _mapper?.Map<Tarefa>(model);
+                _tarefaDomainService?.Cadastrar(tarefa);
 
-            _tarefaDomainService?.Cadastrar(tarefa);
-            return Ok("Cadastro de tarefa realizado com sucesso!");
+                return StatusCode(201, new
+                {
+                    mensagem = "Tarefa atualizada com sucesso.",
+                    Id = tarefa.Id
+                });
+            }
+            catch (ApplicationException e)
+            {
+                return StatusCode(400, new
+                {
+                    mensagem = e.Message
+                });
+            }
+            catch (Exception e)
+            {
+                return StatusCode(500, new
+                {
+                    mensagem = e.Message
+                });
+            }
         }
 
         /// <summary>
         /// Método para atualizar tarefas.
         /// </summary>
         [HttpPut]
-        public IActionResult Put()
+        public IActionResult Put([FromBody] TarefasPutModel model)
         {
-            return Ok("Edição de tarefa!");
+            try
+            {
+                var tarefa = _mapper?.Map<Tarefa>(model);
+                _tarefaDomainService?.Atualizar(tarefa);
+
+                return StatusCode(200, new
+                {
+                    mensagem = "Tarefa atualizada com sucesso.",
+                    Id = tarefa.Id
+                });
+            }
+            catch (ApplicationException e)
+            {
+                return StatusCode(400, new
+                {
+                    mensagem = e.Message
+                });
+            }
+            catch (Exception e)
+            {
+                return StatusCode(500, new
+                {
+                    mensagem = e.Message
+                });
+            }
         }
 
         /// <summary>
         /// Método para exclusão de tarefas.
         /// </summary>
-        [HttpDelete]
-        public IActionResult Delete()
+        [HttpDelete("{id}")]
+        public IActionResult Delete(Guid id)
         {
-            return Ok("Exclusão de tarefa!");
+            try
+            {
+                _tarefaDomainService?.Excluir(id);
+                return StatusCode(200, new
+                {
+                    mensagem = "Tarefa excluída com sucesso.",
+                    Id = id
+                });
+            }
+            catch (ApplicationException e)
+            {
+                return StatusCode(400, new
+                {
+                    mensagem = e.Message
+                });
+            }
+            catch (Exception e)
+            {
+                return StatusCode(500, new
+                {
+                    mensagem = e.Message
+                });
+            }
         }
 
         /// <summary>
@@ -64,7 +126,39 @@ namespace TarefasApp.Services.Controllers
         [HttpGet]
         public IActionResult Get()
         {
-            return Ok("Consulta de tarefas!");
+            try
+            {
+                var tarefas = _mapper?.Map<List<TarefasGetModel>>(_tarefaDomainService.Consultar());
+                return StatusCode(200, tarefas);
+            }
+            catch (Exception e)
+            {
+                return StatusCode(500, new
+                {
+                    mensagem = e.Message
+                });
+            }
+        }
+
+        /// <summary>
+        /// Método para consultar 1 tarefa através do ID.
+        /// </summary>
+        [HttpGet("{id}")]
+        public IActionResult Get(Guid id)
+        {
+            try
+            {
+                var tarefa = _mapper?.Map<TarefasGetModel>(_tarefaDomainService?.ObterPorId(id));
+                return StatusCode(200, tarefa);
+            }
+            catch (Exception e)
+            {
+                return StatusCode(500, new
+                {
+                    mensagem = "Id não encontrado!",
+                    Id = id
+                });
+            }
         }
     }
 }

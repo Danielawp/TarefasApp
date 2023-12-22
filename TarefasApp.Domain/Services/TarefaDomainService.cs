@@ -25,7 +25,13 @@ namespace TarefasApp.Domain.Services
 
         public void Atualizar(Tarefa tarefa)
         {
-            throw new NotImplementedException();
+            if(_tarefaRepository?.GetById(tarefa.Id.Value) == null)
+                throw new ApplicationException("A tarefa informada não existe. Por favor, verefique.");
+
+            if (_categoriaRepository?.GetById(tarefa.CategoriaId.Value) == null)
+                throw new ApplicationException("A categoria não existe.Por favor, verifique");
+
+            _tarefaRepository.Update(tarefa);
         }
 
         public void Cadastrar(Tarefa tarefa)
@@ -37,17 +43,22 @@ namespace TarefasApp.Domain.Services
 
         public List<Tarefa> Consultar()
         {
-            throw new NotImplementedException();
+            return _tarefaRepository?.GetAll();
         }
 
         public void Excluir(Guid id)
         {
-            throw new NotImplementedException();
+            var tarefa = _tarefaRepository?.GetById(id);
+
+            if (tarefa == null)
+                throw new ApplicationException("A teraf informa não existe. Porfavor, verifique.");
+
+            _tarefaRepository?.Delete(tarefa);
         }
 
         public Tarefa ObterPorId(Guid id)
         {
-            throw new NotImplementedException();
+            return _tarefaRepository?.GetById(id);
         }
     }
 }
